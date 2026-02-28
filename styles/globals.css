@@ -115,6 +115,7 @@ body::before {
 .inputWrapper {
   position: relative;
   margin-bottom: 14px;
+  margin-top: 20px;
 }
 .atSymbol {
   position: absolute;
@@ -674,3 +675,7 @@ footer a {
     flex-direction: column;
   }
 }
+
+/* .testPrivet {
+  margin-bottom: 54;
+} */

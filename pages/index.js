@@ -5,7 +5,7 @@ const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 const RL_KEY = 'ir_rl';
 
-const STEP_LABELS = [(u) => `cari akun @${u}... `, () => 'Nicee, ku dapat akun kau ya wak', () => 'Weitt, analisis dulu wak...', () => 'Sabarr laa, dikit lagi ini...'];
+const STEP_LABELS = [(u) => `cari akun @${u}... `, () => 'Nicee, aku dapat akunmu', () => 'Weitt, analisis dulu yak...', () => 'Sabarr, dikit lagi ini...'];
 
 function clientRl() {
   try {
@@ -268,12 +268,14 @@ export default function Home() {
           <h1 className="title">
             Rate Akun
             <br />
-            <span className="gradient">Instagram</span> kau!
+            <span className="gradient">Instagram</span>
           </h1>
-          <p className="subtitle">Masukin username Instagram, terus AI bakal beri insight + roasting akun kmu wkkwkwkw</p>
+          <p className="subtitle">Masukin username Instagram, terus AI bakal beri insight dan nebak karekterkmu wkkwkwkw</p>
         </header>
 
         <div className="card" style={isLoading ? { opacity: 0.55, pointerEvents: 'none' } : {}}>
+          <p className="testPrivet">Pastikan akunmu ga privat ya..</p>
+
           <div className="inputWrapper">
             <span className="atSymbol">@</span>
             <input
@@ -293,7 +295,7 @@ export default function Home() {
           </div>
           <button className="btnRate" onClick={handleRate} disabled={isLoading}>
             <span className="shimmer" />
-            {isLoading ? 'Lagi nganalisis...' : 'Rate Sekarang!'}
+            {isLoading ? 'Lagi nganalisis...' : 'Lihat Sekarang!'}
           </button>
           {rlWarning && <div className="warningBanner">{rlWarning}</div>}
           <div className="usageRow">
@@ -375,7 +377,42 @@ export default function Home() {
 
               <div className="roastBox">
                 <div className="roastLabel">Analisis AI</div>
-                <div className="roastText">{result.roast}</div>
+                <div className="roastText">
+                  {result.roast.split('\n\n').map((para, i) => {
+                    const isTitle = para.startsWith('##') && para.endsWith('##');
+                    if (isTitle) {
+                      return (
+                        <div
+                          key={i}
+                          style={{
+                            fontSize: '0.7rem',
+                            fontWeight: '700',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1.5px',
+                            color: '#ff3c6e',
+                            marginTop: i === 0 ? '0' : '16px',
+                            marginBottom: '6px',
+                            fontStyle: 'normal',
+                          }}
+                        >
+                          {para.replace(/##/g, '')}
+                        </div>
+                      );
+                    }
+                    return (
+                      <p
+                        key={i}
+                        style={{
+                          marginBottom: '4px',
+                          lineHeight: '1.7',
+                          fontSize: '0.93rem',
+                        }}
+                      >
+                        {para}
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
 
               <div className="cardFooter">
